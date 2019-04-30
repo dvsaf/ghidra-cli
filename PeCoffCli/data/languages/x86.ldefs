@@ -6,7 +6,7 @@
             size="32"
             variant="default"
             version="2.8"
-            slafile="x86.sla"
+            slafile="x86cli.sla"
             processorspec="x86.pspec"
             manualindexfile="../manuals/x86.idx"
             id="x86cli:LE:32:default">
@@ -18,7 +18,7 @@
             size="64"
             variant="default"
             version="2.8"
-            slafile="x86-64.sla"
+            slafile="x86-64cli.sla"
             processorspec="x86-64.pspec"
             manualindexfile="../manuals/x86.idx"
             id="x86cli:LE:64:default">

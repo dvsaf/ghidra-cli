@@ -32,7 +32,7 @@ import ghidra.util.task.TaskMonitor;
 /**
  * TODO: Provide class-level documentation that describes what this loader does.
  */
-public class PeCoffCliLoader extends AbstractLibrarySupportLoader {
+public class CoffCliLoader extends AbstractLibrarySupportLoader {
 
 	@Override
 	public String getName() {
@@ -40,7 +40,7 @@ public class PeCoffCliLoader extends AbstractLibrarySupportLoader {
 		// TODO: Name the loader.  This name must match the name of the loader in the .opinion 
 		// files.
 
-		return "My loader";
+		return "Common Object File Format with CLI";
 	}
 
 	@Override
