@@ -96,7 +96,7 @@ public class CliStreamStrings extends CliAbstractStream {
 		}
 
 		try {
-			return reader.readAsciiString(offset + index);
+			return reader.readUtf8String(offset + index);
 		}
 		catch (IOException e) {
 			return null;
