@@ -4,7 +4,11 @@
 	<classpathentry kind="src" path="src/main/help"/>
 	<classpathentry kind="src" path="src/main/resources"/>
 	<classpathentry kind="src" path="ghidra_scripts"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk-11.0.2"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk-11.0.2">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="D:/App/ghidra_9.0.2/Ghidra/Processors/68000/lib/68000.jar" sourcepath="D:/App/ghidra_9.0.2/Ghidra/Processors/68000/lib/68000-src.zip">
 		<attributes>
 			<attribute name="javadoc_location" value="jar:file:/D:\App\ghidra_9.0.2\docs\GhidraAPI_javadoc.zip!/api/"/>
@@ -401,11 +405,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="D:/App/ghidra_9.0.2/Ghidra/Processors/x86/lib/x86.jar" sourcepath="D:/App/ghidra_9.0.2/Ghidra/Processors/x86/lib/x86-src.zip">
-		<attributes>
-			<attribute name="javadoc_location" value="jar:file:/D:\App\ghidra_9.0.2\docs\GhidraAPI_javadoc.zip!/api/"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="D:/App/ghidra_9.0.2/Ghidra/Processors/x86cli/lib/x86.jar" sourcepath="D:/App/ghidra_9.0.2/Ghidra/Processors/x86cli/lib/x86-src.zip">
 		<attributes>
 			<attribute name="javadoc_location" value="jar:file:/D:\App\ghidra_9.0.2\docs\GhidraAPI_javadoc.zip!/api/"/>
 		</attributes>

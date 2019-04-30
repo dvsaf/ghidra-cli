@@ -401,11 +401,6 @@
 			<attribute name="javadoc_location" value="jar:file:/D:\App\ghidra_9.0.2\docs\GhidraAPI_javadoc.zip!/api/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="D:/App/ghidra_9.0.2/Ghidra/Processors/x86cli/lib/x86.jar" sourcepath="D:/App/ghidra_9.0.2/Ghidra/Processors/x86cli/lib/x86-src.zip">
-		<attributes>
-			<attribute name="javadoc_location" value="jar:file:/D:\App\ghidra_9.0.2\docs\GhidraAPI_javadoc.zip!/api/"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
