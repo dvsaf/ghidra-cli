@@ -272,6 +272,10 @@ public abstract class CliAbstractSig extends CliBlob implements CliRepresentable
 		public DataType getDefinitionDataType() {
 			return CliTypeCodeDataType.dataType;
 		}
+
+		public CliElementType getBaseTypeCode() {
+			return baseTypeCode;
+		}
 	}
 
 	public class CliTypeArray extends CliSigType {
@@ -298,6 +302,14 @@ public abstract class CliAbstractSig extends CliBlob implements CliRepresentable
 			struct.add(CliTypeCodeDataType.dataType, "Type", "Type of array");
 			struct.add(arrayShape.getDefinitionDataType(), "ArrayShape", null);
 			return struct;
+		}
+
+		public CliElementType getArrayType() {
+			return arrayType;
+		}
+
+		public CliArrayShape getArrayShape() {
+			return arrayShape;
 		}
 	}
 
@@ -356,6 +368,10 @@ public abstract class CliAbstractSig extends CliBlob implements CliRepresentable
 			struct.add(getDataTypeForBytes(typeBytes), "Type", "TypeDefOrRefOrSpecEncoded");
 			return struct;
 		}
+
+		public int getEncodedType() {
+			return encodedType;
+		}
 	}
 
 	public class CliTypeFnPtr extends CliSigType {
@@ -385,6 +401,14 @@ public abstract class CliAbstractSig extends CliBlob implements CliRepresentable
 			struct.add(DWORD, "MethodDefOrRef", "index into blob heap");
 			return struct;
 			// TODO: Return the correct size of a signature reference (always 4B in this context perchance?)
+		}
+
+		public CliAbstractSig getSig() {
+			return sig;
+		}
+
+		public boolean isDefSig() {
+			return isDefSig;
 		}
 	}
 
@@ -475,6 +499,22 @@ public abstract class CliAbstractSig extends CliBlob implements CliRepresentable
 			}
 			return struct;
 		}
+
+		public CliElementType getFirstType() {
+			return firstType;
+		}
+
+		public int getEncodedType() {
+			return encodedType;
+		}
+
+		public int getGenArgCount() {
+			return genArgCount;
+		}
+
+		public List<CliSigType> getArgTypes() {
+			return argTypes;
+		}
 	}
 
 	public class CliTypeVarOrMvar extends CliSigType {
@@ -502,6 +542,10 @@ public abstract class CliAbstractSig extends CliBlob implements CliRepresentable
 			struct.add(BYTE, "Type", "Var or Mvar");
 			struct.add(getDataTypeForBytes(numberBytes), "number", null);
 			return struct;
+		}
+
+		public int getNumber() {
+			return number;
 		}
 	}
 
@@ -536,6 +580,14 @@ public abstract class CliAbstractSig extends CliBlob implements CliRepresentable
 			}
 			struct.add(CliTypeCodeDataType.dataType, "Type", "type or void");
 			return struct;
+		}
+
+		public List<CliCustomMod> getCustomMods() {
+			return customMods;
+		}
+
+		public CliElementType getTypeCode() {
+			return typeCode;
 		}
 	}
 
@@ -583,6 +635,14 @@ public abstract class CliAbstractSig extends CliBlob implements CliRepresentable
 			}
 			struct.add(type.getDefinitionDataType(), "Type", "type or void");
 			return struct;
+		}
+
+		public List<CliCustomMod> getCustomMods() {
+			return customMods;
+		}
+
+		public CliSigType getType() {
+			return type;
 		}
 	}
 
@@ -635,6 +695,10 @@ public abstract class CliAbstractSig extends CliBlob implements CliRepresentable
 			struct.add(CliTypeCodeDataType.dataType, "ValueType", "ValueType");
 			struct.add(getDataTypeForBytes(typeBytes), "Type", "TypeDefOrRefOrSpecEncoded");
 			return struct;
+		}
+
+		public int getEncodedType() {
+			return encodedType;
 		}
 	}
 
