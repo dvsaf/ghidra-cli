@@ -1,0 +1,239 @@
+#
+
+define token MdToken (32)     tok=(0,31) hex;
+#define token Imm8 (8)     imm8=(0,7) hex;
+#define token Imm32 (32)     imm32=(0,31) hex;
+#define token Imm64 (64)     imm64=(0,63) hex;
+define token Var8 (8)     var8=(0,7) hex;
+define token Var16 (16)     var16=(0,15) hex;
+define token Single (32)     single=(0,31) hex;
+define token Double(64)     double=(0,63) hex;
+define token Label8 (8)     label8=(0,7) hex;
+define token Label32 (32)     label32=(0,31) hex;
+
+:NOP is cliMode=1 & byte=0x0; byte=0x0 { } 
+:BREAK is cliMode=1 & byte=0x1 { } 
+:LDARG.0 is cliMode=1 & byte=0x2 { } 
+:LDARG.1 is cliMode=1 & byte=0x3 { } 
+:LDARG.2 is cliMode=1 & byte=0x4 { } 
+:LDARG.3 is cliMode=1 & byte=0x5 { } 
+:LDLOC.0 is cliMode=1 & byte=0x6 { } 
+:LDLOC.1 is cliMode=1 & byte=0x7 { } 
+:LDLOC.2 is cliMode=1 & byte=0x8 { } 
+:LDLOC.3 is cliMode=1 & byte=0x9 { } 
+:STLOC.0 is cliMode=1 & byte=0xa { } 
+:STLOC.1 is cliMode=1 & byte=0xb { } 
+:STLOC.2 is cliMode=1 & byte=0xc { } 
+:STLOC.3 is cliMode=1 & byte=0xd { } 
+:LDARG.S var8 is cliMode=1 & byte=0xe; var8 { } 
+:LDARGA.S var8 is cliMode=1 & byte=0xf; var8 { } 
+:STARG.S var8 is cliMode=1 & byte=0x10; var8 { } 
+:LDLOC.S var8 is cliMode=1 & byte=0x11; var8 { } 
+:LDLOCA.S var8 is cliMode=1 & byte=0x12; var8 { } 
+:STLOC.S var8 is cliMode=1 & byte=0x13; var8 { } 
+:LDNULL is cliMode=1 & byte=0x14 { } 
+:LDC.I4.M1 is cliMode=1 & byte=0x15 { } 
+:LDC.I4.0 is cliMode=1 & byte=0x16 { } 
+:LDC.I4.1 is cliMode=1 & byte=0x17 { } 
+:LDC.I4.2 is cliMode=1 & byte=0x18 { } 
+:LDC.I4.3 is cliMode=1 & byte=0x19 { } 
+:LDC.I4.4 is cliMode=1 & byte=0x1a { } 
+:LDC.I4.5 is cliMode=1 & byte=0x1b { } 
+:LDC.I4.6 is cliMode=1 & byte=0x1c { } 
+:LDC.I4.7 is cliMode=1 & byte=0x1d { } 
+:LDC.I4.8 is cliMode=1 & byte=0x1e { } 
+:LDC.I4.S imm8 is cliMode=1 & byte=0x1f; imm8 { } 
+:LDC.I4 imm32 is cliMode=1 & byte=0x20; imm32 { } 
+:LDC.I8 imm64 is cliMode=1 & byte=0x21; imm64 { } 
+:LDC.R4 single is cliMode=1 & byte=0x22; single { } 
+:LDC.R8 double is cliMode=1 & byte=0x23; double { } 
+:DUP is cliMode=1 & byte=0x25 { } 
+:POP is cliMode=1 & byte=0x26 { } 
+:JMP tok is cliMode=1 & byte=0x27; tok { } 
+:CALL tok is cliMode=1 & byte=0x28; tok { } 
+:CALLI tok is cliMode=1 & byte=0x29; tok { } 
+:RET is cliMode=1 & byte=0x2a { } 
+:BR.S label8 is cliMode=1 & byte=0x2b; label8 { } 
+:BRFALSE.S label8 is cliMode=1 & byte=0x2c; label8 { } 
+:BRTRUE.S label8 is cliMode=1 & byte=0x2d; label8 { } 
+:BEQ.S label8 is cliMode=1 & byte=0x2e; label8 { } 
+:BGE.S label8 is cliMode=1 & byte=0x2f; label8 { } 
+:BGT.S label8 is cliMode=1 & byte=0x30; label8 { } 
+:BLE.S label8 is cliMode=1 & byte=0x31; label8 { } 
+:BLT.S label8 is cliMode=1 & byte=0x32; label8 { } 
+:BNE.UN.S label8 is cliMode=1 & byte=0x33; label8 { } 
+:BGE.UN.S label8 is cliMode=1 & byte=0x34; label8 { } 
+:BGT.UN.S label8 is cliMode=1 & byte=0x35; label8 { } 
+:BLE.UN.S label8 is cliMode=1 & byte=0x36; label8 { } 
+:BLT.UN.S label8 is cliMode=1 & byte=0x37; label8 { } 
+:BR label32 is cliMode=1 & byte=0x38; label32 { } 
+:BRFALSE label32 is cliMode=1 & byte=0x39; label32 { } 
+:BRTRUE label32 is cliMode=1 & byte=0x3a; label32 { } 
+:BEQ label32 is cliMode=1 & byte=0x3b; label32 { } 
+:BGE label32 is cliMode=1 & byte=0x3c; label32 { } 
+:BGT label32 is cliMode=1 & byte=0x3d; label32 { } 
+:BLE label32 is cliMode=1 & byte=0x3e; label32 { } 
+:BLT label32 is cliMode=1 & byte=0x3f; label32 { } 
+:BNE.UN label32 is cliMode=1 & byte=0x40; label32 { } 
+:BGE.UN label32 is cliMode=1 & byte=0x41; label32 { } 
+:BGT.UN label32 is cliMode=1 & byte=0x42; label32 { } 
+:BLE.UN label32 is cliMode=1 & byte=0x43; label32 { } 
+:BLT.UN label32 is cliMode=1 & byte=0x44; label32 { } 
+:SWITCH is cliMode=1 & byte=0x45 { } 
+:LDIND.I1 is cliMode=1 & byte=0x46 { } 
+:LDIND.U1 is cliMode=1 & byte=0x47 { } 
+:LDIND.I2 is cliMode=1 & byte=0x48 { } 
+:LDIND.U2 is cliMode=1 & byte=0x49 { } 
+:LDIND.I4 is cliMode=1 & byte=0x4a { } 
+:LDIND.U4 is cliMode=1 & byte=0x4b { } 
+:LDIND.I8 is cliMode=1 & byte=0x4c { } 
+:LDIND.I is cliMode=1 & byte=0x4d { } 
+:LDIND.R4 is cliMode=1 & byte=0x4e { } 
+:LDIND.R8 is cliMode=1 & byte=0x4f { } 
+:LDIND.REF is cliMode=1 & byte=0x50 { } 
+:STIND.REF is cliMode=1 & byte=0x51 { } 
+:STIND.I1 is cliMode=1 & byte=0x52 { } 
+:STIND.I2 is cliMode=1 & byte=0x53 { } 
+:STIND.I4 is cliMode=1 & byte=0x54 { } 
+:STIND.I8 is cliMode=1 & byte=0x55 { } 
+:STIND.R4 is cliMode=1 & byte=0x56 { } 
+:STIND.R8 is cliMode=1 & byte=0x57 { } 
+:ADD is cliMode=1 & byte=0x58 { } 
+:SUB is cliMode=1 & byte=0x59 { } 
+:MUL is cliMode=1 & byte=0x5a { } 
+:DIV is cliMode=1 & byte=0x5b { } 
+:DIV.UN is cliMode=1 & byte=0x5c { } 
+:REM is cliMode=1 & byte=0x5d { } 
+:REM.UN is cliMode=1 & byte=0x5e { } 
+:AND is cliMode=1 & byte=0x5f { } 
+:OR is cliMode=1 & byte=0x60 { } 
+:XOR is cliMode=1 & byte=0x61 { } 
+:SHL is cliMode=1 & byte=0x62 { } 
+:SHR is cliMode=1 & byte=0x63 { } 
+:SHR.UN is cliMode=1 & byte=0x64 { } 
+:NEG is cliMode=1 & byte=0x65 { } 
+:NOT is cliMode=1 & byte=0x66 { } 
+:CONV.I1 is cliMode=1 & byte=0x67 { } 
+:CONV.I2 is cliMode=1 & byte=0x68 { } 
+:CONV.I4 is cliMode=1 & byte=0x69 { } 
+:CONV.I8 is cliMode=1 & byte=0x6a { } 
+:CONV.R4 is cliMode=1 & byte=0x6b { } 
+:CONV.R8 is cliMode=1 & byte=0x6c { } 
+:CONV.U4 is cliMode=1 & byte=0x6d { } 
+:CONV.U8 is cliMode=1 & byte=0x6e { } 
+:CALLVIRT tok is cliMode=1 & byte=0x6f; tok { } 
+:CPOBJ tok is cliMode=1 & byte=0x70; tok { } 
+:LDOBJ tok is cliMode=1 & byte=0x71; tok { } 
+:LDSTR tok is cliMode=1 & byte=0x72; tok { } 
+:NEWOBJ tok is cliMode=1 & byte=0x73; tok { } 
+:CASTCLASS tok is cliMode=1 & byte=0x74; tok { } 
+:ISINST tok is cliMode=1 & byte=0x75; tok { } 
+:CONV.R.UN is cliMode=1 & byte=0x76 { } 
+:UNBOX tok is cliMode=1 & byte=0x79; tok { } 
+:THROW is cliMode=1 & byte=0x7a { } 
+:LDFLD tok is cliMode=1 & byte=0x7b; tok { } 
+:LDFLDA tok is cliMode=1 & byte=0x7c; tok { } 
+:STFLD tok is cliMode=1 & byte=0x7d; tok { } 
+:LDSFLD tok is cliMode=1 & byte=0x7e; tok { } 
+:LDSFLDA tok is cliMode=1 & byte=0x7f; tok { } 
+:STSFLD tok is cliMode=1 & byte=0x80; tok { } 
+:STOBJ tok is cliMode=1 & byte=0x81; tok { } 
+:CONV.OVF.I1.UN is cliMode=1 & byte=0x82 { } 
+:CONV.OVF.I2.UN is cliMode=1 & byte=0x83 { } 
+:CONV.OVF.I4.UN is cliMode=1 & byte=0x84 { } 
+:CONV.OVF.I8.UN is cliMode=1 & byte=0x85 { } 
+:CONV.OVF.U1.UN is cliMode=1 & byte=0x86 { } 
+:CONV.OVF.U2.UN is cliMode=1 & byte=0x87 { } 
+:CONV.OVF.U4.UN is cliMode=1 & byte=0x88 { } 
+:CONV.OVF.U8.UN is cliMode=1 & byte=0x89 { } 
+:CONV.OVF.I.UN is cliMode=1 & byte=0x8a { } 
+:CONV.OVF.U.UN is cliMode=1 & byte=0x8b { } 
+:BOX tok is cliMode=1 & byte=0x8c; tok { } 
+:NEWARR tok is cliMode=1 & byte=0x8d; tok { } 
+:LDLEN is cliMode=1 & byte=0x8e { } 
+:LDELEMA tok is cliMode=1 & byte=0x8f; tok { } 
+:LDELEM.I1 is cliMode=1 & byte=0x90 { } 
+:LDELEM.U1 is cliMode=1 & byte=0x91 { } 
+:LDELEM.I2 is cliMode=1 & byte=0x92 { } 
+:LDELEM.U2 is cliMode=1 & byte=0x93 { } 
+:LDELEM.I4 is cliMode=1 & byte=0x94 { } 
+:LDELEM.U4 is cliMode=1 & byte=0x95 { } 
+:LDELEM.I8 is cliMode=1 & byte=0x96 { } 
+:LDELEM.I is cliMode=1 & byte=0x97 { } 
+:LDELEM.R4 is cliMode=1 & byte=0x98 { } 
+:LDELEM.R8 is cliMode=1 & byte=0x99 { } 
+:LDELEM.REF is cliMode=1 & byte=0x9a { } 
+:STELEM.I is cliMode=1 & byte=0x9b { } 
+:STELEM.I1 is cliMode=1 & byte=0x9c { } 
+:STELEM.I2 is cliMode=1 & byte=0x9d { } 
+:STELEM.I4 is cliMode=1 & byte=0x9e { } 
+:STELEM.I8 is cliMode=1 & byte=0x9f { } 
+:STELEM.R4 is cliMode=1 & byte=0xa0 { } 
+:STELEM.R8 is cliMode=1 & byte=0xa1 { } 
+:STELEM.REF is cliMode=1 & byte=0xa2 { } 
+:LDELEM tok is cliMode=1 & byte=0xa3; tok { } 
+:STELEM tok is cliMode=1 & byte=0xa4; tok { } 
+:UNBOX.ANY tok is cliMode=1 & byte=0xa5; tok { } 
+:CONV.OVF.I1 is cliMode=1 & byte=0xb3 { } 
+:CONV.OVF.U1 is cliMode=1 & byte=0xb4 { } 
+:CONV.OVF.I2 is cliMode=1 & byte=0xb5 { } 
+:CONV.OVF.U2 is cliMode=1 & byte=0xb6 { } 
+:CONV.OVF.I4 is cliMode=1 & byte=0xb7 { } 
+:CONV.OVF.U4 is cliMode=1 & byte=0xb8 { } 
+:CONV.OVF.I8 is cliMode=1 & byte=0xb9 { } 
+:CONV.OVF.U8 is cliMode=1 & byte=0xba { } 
+:REFANYVAL tok is cliMode=1 & byte=0xc2; tok { } 
+:CKFINITE is cliMode=1 & byte=0xc3 { } 
+:MKREFANY tok is cliMode=1 & byte=0xc6; tok { } 
+:LDTOKEN tok is cliMode=1 & byte=0xd0; tok { } 
+:CONV.U2 is cliMode=1 & byte=0xd1 { } 
+:CONV.U1 is cliMode=1 & byte=0xd2 { } 
+:CONV.I is cliMode=1 & byte=0xd3 { } 
+:CONV.OVF.I is cliMode=1 & byte=0xd4 { } 
+:CONV.OVF.U is cliMode=1 & byte=0xd5 { } 
+:ADD.OVF is cliMode=1 & byte=0xd6 { } 
+:ADD.OVF.UN is cliMode=1 & byte=0xd7 { } 
+:MUL.OVF is cliMode=1 & byte=0xd8 { } 
+:MUL.OVF.UN is cliMode=1 & byte=0xd9 { } 
+:SUB.OVF is cliMode=1 & byte=0xda { } 
+:SUB.OVF.UN is cliMode=1 & byte=0xdb { } 
+:ENDFINALLY is cliMode=1 & byte=0xdc { } 
+:LEAVE label32 is cliMode=1 & byte=0xdd; label32 { } 
+:LEAVE.S label8 is cliMode=1 & byte=0xde; label8 { } 
+:STIND.I is cliMode=1 & byte=0xdf { } 
+:CONV.U is cliMode=1 & byte=0xe0 { } 
+:PREFIX7 is cliMode=1 & byte=0xf8 { } 
+:PREFIX6 is cliMode=1 & byte=0xf9 { } 
+:PREFIX5 is cliMode=1 & byte=0xfa { } 
+:PREFIX4 is cliMode=1 & byte=0xfb { } 
+:PREFIX3 is cliMode=1 & byte=0xfc { } 
+:PREFIX2 is cliMode=1 & byte=0xfd { } 
+:PREFIX1 is cliMode=1 & byte=0xfe { } 
+:PREFIXREF is cliMode=1 & byte=0xff { } 
+:ARGLIST is cliMode=1 & byte=0xfe; byte=0x0 { } 
+:CEQ is cliMode=1 & byte=0xfe; byte=0x1 { } 
+:CGT is cliMode=1 & byte=0xfe; byte=0x2 { } 
+:CGT.UN is cliMode=1 & byte=0xfe; byte=0x3 { } 
+:CLT is cliMode=1 & byte=0xfe; byte=0x4 { } 
+:CLT.UN is cliMode=1 & byte=0xfe; byte=0x5 { } 
+:LDFTN tok is cliMode=1 & byte=0xfe; byte=0x6; tok { } 
+:LDVIRTFTN tok is cliMode=1 & byte=0xfe; byte=0x7; tok { } 
+:LDARG var16 is cliMode=1 & byte=0xfe; byte=0x9; var16 { } 
+:LDARGA var16 is cliMode=1 & byte=0xfe; byte=0xa; var16 { } 
+:STARG var16 is cliMode=1 & byte=0xfe; byte=0xb; var16 { } 
+:LDLOC var16 is cliMode=1 & byte=0xfe; byte=0xc; var16 { } 
+:LDLOCA var16 is cliMode=1 & byte=0xfe; byte=0xd; var16 { } 
+:STLOC var16 is cliMode=1 & byte=0xfe; byte=0xe; var16 { } 
+:LOCALLOC is cliMode=1 & byte=0xfe; byte=0xf { } 
+:ENDFILTER is cliMode=1 & byte=0xfe; byte=0x11 { } 
+:UNALIGNED. imm8 is cliMode=1 & byte=0xfe; byte=0x12; imm8 { } 
+:VOLATILE. is cliMode=1 & byte=0xfe; byte=0x13 { } 
+:TAIL. is cliMode=1 & byte=0xfe; byte=0x14 { } 
+:INITOBJ tok is cliMode=1 & byte=0xfe; byte=0x15; tok { } 
+:CONSTRAINED. tok is cliMode=1 & byte=0xfe; byte=0x16; tok { } 
+:CPBLK is cliMode=1 & byte=0xfe; byte=0x17 { } 
+:INITBLK is cliMode=1 & byte=0xfe; byte=0x18 { } 
+:RETHROW is cliMode=1 & byte=0xfe; byte=0x1a { } 
+:SIZEOF tok is cliMode=1 & byte=0xfe; byte=0x1c; tok { } 
+:REFANYTYPE is cliMode=1 & byte=0xfe; byte=0x1d { } 
+:READONLY. is cliMode=1 & byte=0xfe; byte=0x1e { } 

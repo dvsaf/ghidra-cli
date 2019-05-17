@@ -1,0 +1,12 @@
+<opinions>
+    <constraint loader="Portable Executable with CLI">
+      <constraint compilerSpecID="windows">
+        <constraint primary="332"   processor="x86cli"     endian="little" size="32" />
+        <constraint primary="34404" processor="x86cli"     endian="little" size="64" />
+      </constraint>
+    </constraint>
+    <constraint loader="Common Object File Format with CLI" compilerSpecID="windows">
+        <constraint primary="332"    processor="x86cli"          endian="little" size="32" />
+        <constraint primary="-31132" processor="x86cli"          endian="little" size="64" />
+    </constraint>
+</opinions>
