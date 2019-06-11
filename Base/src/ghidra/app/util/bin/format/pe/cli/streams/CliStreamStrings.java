@@ -69,7 +69,7 @@ public class CliStreamStrings extends CliAbstractStream {
 
 		int bytesRead = 1;
 		while (bytesRead < header.getSize()) {
-			String str = reader.readNextAsciiString();
+			String str = reader.readNextUtf8String();
 			stringIndexes.add(bytesRead);
 			stringSizes.add(str.length() + 1);
 			bytesRead += str.length() + 1;

@@ -344,6 +344,28 @@ public class BinaryReader {
 	}
 
 	/**
+	 * Reads a null-terminated UTF-8 Unicode string starting
+	 * at <code>index</code>.
+	 * <p>
+	 * Leading and trailing spaces will be trimmed before the string is returned.
+	 * <p>
+	 * @param index the index where the UTF-8 Unicode string begins
+	 * @return the trimmed UTF-8 Unicode string
+	 * @exception IOException if an I/O error occurs
+	 */
+	public String readNextUtf8String() throws IOException {
+		int length = 0;
+		long offset = currentIndex;
+		while (readByte(offset) != 0) {
+			offset++;
+			length++;
+		}
+		var bytes = readByteArray(currentIndex, length);
+		currentIndex += length;
+		return new String(bytes, "UTF-8").trim();
+	}
+	
+	/**
 	 * Reads the Unicode string at the current index and then increments the current
 	 * index by the length of the Unicode string that was found. This method
 	 * expects the string to be double null-terminated ('\0\0').
@@ -554,7 +576,6 @@ public class BinaryReader {
 		var bytes = readByteArray(index, length);
 		return new String(bytes, "UTF-8").trim();
 	}
-
 
 	/**
 	 * Reads a null-terminated UTF-16 Unicode string starting

@@ -16,59 +16,81 @@
 package pecoffcli;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.List;
 
+import generic.continues.GenericFactory;
 import ghidra.app.util.Option;
 import ghidra.app.util.bin.ByteProvider;
+import ghidra.app.util.bin.format.pe.COMDescriptorDataDirectory;
+import ghidra.app.util.bin.format.pe.OptionalHeader;
+import ghidra.app.util.bin.format.pe.PortableExecutable;
+import ghidra.app.util.bin.format.pe.PortableExecutable.SectionLayout;
+import ghidra.app.util.bin.format.pe.cli.tables.CliTableMethodDef;
+import ghidra.app.util.bin.format.pe.cli.tables.CliTypeTable;
 import ghidra.app.util.importer.MemoryConflictHandler;
 import ghidra.app.util.importer.MessageLog;
-import ghidra.app.util.opinion.AbstractLibrarySupportLoader;
+import ghidra.app.util.importer.MessageLogContinuesFactory;
 import ghidra.app.util.opinion.LoadSpec;
+import ghidra.app.util.opinion.Loader;
+import ghidra.app.util.opinion.PeLoader;
 import ghidra.framework.model.DomainObject;
 import ghidra.program.model.listing.Program;
-import ghidra.util.exception.CancelledException;
 import ghidra.util.task.TaskMonitor;
 
 /**
  * TODO: Provide class-level documentation that describes what this loader does.
  */
-public class PeCliLoader extends AbstractLibrarySupportLoader {
+public class PeCliLoader extends PeLoader {
+
+	/** The name of the PECLI loader */
+	public final static String PECLI_NAME = "Portable Executable with CLI";
 
 	@Override
 	public String getName() {
 
-		// TODO: Name the loader.  This name must match the name of the loader in the .opinion 
-		// files.
+		// TODO: Name the loader. This name must match the name of the loader in the
+		// .opinion files.
 
-		return "Portable Executable with CLI";
+		return PECLI_NAME;
 	}
 
 	@Override
-	public Collection<LoadSpec> findSupportedLoadSpecs(ByteProvider provider) throws IOException {
-		List<LoadSpec> loadSpecs = new ArrayList<>();
+	protected void load(ByteProvider provider, LoadSpec loadSpec, List<Option> options, Program program,
+			MemoryConflictHandler handler, TaskMonitor monitor, MessageLog log) throws IOException {
 
-		// TODO: Examine the bytes in 'provider' to determine if this loader can load it.  If it 
-		// can load it, return the appropriate load specifications.
+		// Need to parse CLI headers
+		options.add(new Option(PARSE_CLI_HEADERS_OPTION_NAME, true, Boolean.class,
+				Loader.COMMAND_LINE_ARG_PREFIX + "-parseCliHeaders"));
+		super.load(provider, loadSpec, options, program, handler, monitor, log);
 
-		return loadSpecs;
+		monitor.setMessage(program.getName() + ": Setting mode flag for managed methods");
+
+		GenericFactory factory = MessageLogContinuesFactory.create(log);
+		PortableExecutable pe = PortableExecutable.createPortableExecutable(factory, provider, SectionLayout.FILE,
+				false, true);
+		if (pe.getNTHeader().getOptionalHeader().isCLI()) {
+
+			var corDir = (COMDescriptorDataDirectory) pe.getNTHeader().getOptionalHeader()
+					.getDataDirectories()[OptionalHeader.IMAGE_DIRECTORY_ENTRY_COMHEADER];
+
+			var metadataRoot = corDir.getHeader().getMetadata().getMetadataRoot();
+			var methodsTable = metadataRoot.getMetadataStream().getTable(CliTypeTable.MethodDef);
+			for (var index = 1; index <= methodsTable.getNumRows(); index++) {
+				var methodRow = ((CliTableMethodDef.CliMethodDefRow) methodsTable.getRow(index));
+//				methodRow.
+			}
+		}
+
+		monitor.setMessage(program.getName() + ": done!");
 	}
 
 	@Override
-	protected void load(ByteProvider provider, LoadSpec loadSpec, List<Option> options,
-			Program program, MemoryConflictHandler handler, TaskMonitor monitor, MessageLog log)
-			throws CancelledException, IOException {
-
-		// TODO: Load the bytes from 'provider' into the 'program'.
-	}
-
-	@Override
-	public List<Option> getDefaultOptions(ByteProvider provider, LoadSpec loadSpec,
-			DomainObject domainObject, boolean isLoadIntoProgram) {
-		List<Option> list =
-			super.getDefaultOptions(provider, loadSpec, domainObject, isLoadIntoProgram);
+	public List<Option> getDefaultOptions(ByteProvider provider, LoadSpec loadSpec, DomainObject domainObject,
+			boolean isLoadIntoProgram) {
+		List<Option> list = super.getDefaultOptions(provider, loadSpec, domainObject, isLoadIntoProgram);
 
 		// TODO: If this loader has custom options, add them to 'list'
-		list.add(new Option("Option name goes here", "Default option value goes here"));
+//		list.add(new Option("Option name goes here", "Default option value goes here"));
 
 		return list;
 	}
@@ -76,7 +98,8 @@ public class PeCliLoader extends AbstractLibrarySupportLoader {
 	@Override
 	public String validateOptions(ByteProvider provider, LoadSpec loadSpec, List<Option> options) {
 
-		// TODO: If this loader has custom options, validate them here.  Not all options require
+		// TODO: If this loader has custom options, validate them here. Not all options
+		// require
 		// validation.
 
 		return super.validateOptions(provider, loadSpec, options);
