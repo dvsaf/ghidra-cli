@@ -11,7 +11,7 @@ define token Double(64)     double=(0,63) hex;
 define token Label8 (8)     label8=(0,7) hex;
 define token Label32 (32)     label32=(0,31) hex;
 
-:NOP is cliMode=1 & byte=0x0; byte=0x0 { } 
+:NOP is cliMode=1 & byte=0x0 { } 
 :BREAK is cliMode=1 & byte=0x1 { } 
 :LDARG.0 is cliMode=1 & byte=0x2 { } 
 :LDARG.1 is cliMode=1 & byte=0x3 { } 

@@ -16,17 +16,24 @@
 package pecoffcli;
 
 import java.io.IOException;
+import java.math.BigInteger;
 import java.util.List;
 
 import generic.continues.GenericFactory;
 import ghidra.app.util.Option;
+import ghidra.app.util.bin.BinaryReader;
 import ghidra.app.util.bin.ByteProvider;
+import ghidra.app.util.bin.MemoryByteProvider;
 import ghidra.app.util.bin.format.pe.COMDescriptorDataDirectory;
 import ghidra.app.util.bin.format.pe.OptionalHeader;
+import ghidra.app.util.bin.format.pe.PeUtils;
 import ghidra.app.util.bin.format.pe.PortableExecutable;
 import ghidra.app.util.bin.format.pe.PortableExecutable.SectionLayout;
+import ghidra.app.util.bin.format.pe.cli.methods.CliMethodDef;
+import ghidra.app.util.bin.format.pe.cli.tables.CliAbstractTableRow;
 import ghidra.app.util.bin.format.pe.cli.tables.CliTableMethodDef;
 import ghidra.app.util.bin.format.pe.cli.tables.CliTypeTable;
+import ghidra.app.util.bin.format.pe.cli.tables.CliTableMethodDef.CliMethodDefRow;
 import ghidra.app.util.importer.MemoryConflictHandler;
 import ghidra.app.util.importer.MessageLog;
 import ghidra.app.util.importer.MessageLogContinuesFactory;
@@ -34,6 +41,9 @@ import ghidra.app.util.opinion.LoadSpec;
 import ghidra.app.util.opinion.Loader;
 import ghidra.app.util.opinion.PeLoader;
 import ghidra.framework.model.DomainObject;
+import ghidra.program.model.address.Address;
+import ghidra.program.model.lang.RegisterValue;
+import ghidra.program.model.listing.ContextChangeException;
 import ghidra.program.model.listing.Program;
 import ghidra.util.task.TaskMonitor;
 
@@ -67,7 +77,7 @@ public class PeCliLoader extends PeLoader {
 
 		GenericFactory factory = MessageLogContinuesFactory.create(log);
 		PortableExecutable pe = PortableExecutable.createPortableExecutable(factory, provider, SectionLayout.FILE,
-				false, true);
+				true, true);
 		if (pe.getNTHeader().getOptionalHeader().isCLI()) {
 
 			var corDir = (COMDescriptorDataDirectory) pe.getNTHeader().getOptionalHeader()
@@ -76,8 +86,27 @@ public class PeCliLoader extends PeLoader {
 			var metadataRoot = corDir.getHeader().getMetadata().getMetadataRoot();
 			var methodsTable = metadataRoot.getMetadataStream().getTable(CliTypeTable.MethodDef);
 			for (var index = 1; index <= methodsTable.getNumRows(); index++) {
-				var methodRow = ((CliTableMethodDef.CliMethodDefRow) methodsTable.getRow(index));
-//				methodRow.
+				var method = ((CliTableMethodDef.CliMethodDefRow) methodsTable.getRow(index));
+				if (method.RVA == 0)
+					continue;
+				Address addr = PeUtils.getMarkupAddress(program, false, pe.getNTHeader(), method.RVA);
+				// Create MethodDef at RVA
+				BinaryReader reader =
+					new BinaryReader(new MemoryByteProvider(program.getMemory(), addr),
+						!program.getMemory().isBigEndian());
+				CliMethodDef methodDef = new CliMethodDef(addr, reader);
+				Address startAddr = addr.add(methodDef.isFatHeader() ? 12 : 1);
+				Address endAddr = startAddr.add(methodDef.getMethodSize() - 1); // TODO: -1? AddressSetView is inclusive.
+				// set cliMode flag
+				var context = program.getProgramContext();
+				var register = context.getRegister("cliMode");
+				var registerValue = new RegisterValue(register, BigInteger.ONE, BigInteger.ONE);
+				try {
+					context.setRegisterValue(startAddr, endAddr, registerValue);
+				} catch (ContextChangeException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 

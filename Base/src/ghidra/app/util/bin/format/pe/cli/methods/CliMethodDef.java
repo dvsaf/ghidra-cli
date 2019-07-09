@@ -89,6 +89,10 @@ public class CliMethodDef implements StructConverter {
 		}
 		return struct;
 	}
+	
+	public boolean isFatHeader() {
+		return isFatHeader;
+	}
 
 	public int getMethodSize() {
 		return methodSize;
